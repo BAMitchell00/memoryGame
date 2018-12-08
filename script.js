@@ -1,5 +1,7 @@
 //BRADLEY MITCHELL N220-27547 12/7/18
 var memoryGame =document.querySelector(".memory-game");
+var faceUpCards =[];
+
 
 var cards = [
     {
@@ -81,9 +83,6 @@ var randomCards = cards.sort(function(){return .5 - Math.random()});
 
 cards.map(generateCard).join("");
 
-document.addEventListener("DOMContentLoaded", function(){
-
-});
 
 
 function generateCard(card){
@@ -98,18 +97,39 @@ function generateCard(card){
         setVisibility(ev, function(currentTarget) {
             if (currentTarget.classList.contains("is-visible")) {
                 currentTarget.setAttribute("src", getCard(currentTarget.id).image);
+                faceUpCards.push(currentTarget);
+
+                if(faceUpCards.length > 1){
+                    compareCards();
+                }
             }
             else {
                 currentTarget.setAttribute("src", "images/redCardBack.png");
             }
         });
+        function compareCards() {
+            if (faceUpCards[0] == faceUpCards[1]) {
+                faceUpCards[0].removeEventListener('click', ev);
+                faceUpCards[1].removeEventListener('click', ev);
+                console.log("Same Detected");
+                emptyArray();
+            }
+            else {
+                faceUpCards[0].setAttribute("src","images/redCardBack.png");
+                faceUpCards[1].setAttribute("src","images/redCardBack.png");
+                console.log('removed');
+                console.log(faceUpCards[0].classList)
+                faceUpCards.length = 0;
+            }
+        }
+
     });
     memoryGame.appendChild(image)
 }
 
 
 function flipCard(card){
-    console.log(card.dataset)
+
 }
 
 
@@ -129,11 +149,10 @@ function setVisibility(ev, cb) {
     cb(ev.currentTarget);
 }
 
-
-function compareCards(){
-
-
+function emptyArray(){
+    faceUpCards.length = 0;
 }
+
 
 function returnCards(){
 
