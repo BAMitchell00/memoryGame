@@ -99,41 +99,32 @@ function generateCard(card){
                 currentTarget.setAttribute("src", getCard(currentTarget.id).image);
                 faceUpCards.push(currentTarget);
 
-                if(faceUpCards.length > 1){
+                if(faceUpCards.length > 2){
                     compareCards();
                 }
             }
-            else {
-                currentTarget.setAttribute("src", "images/redCardBack.png");
-            }
+            // else {
+            //     currentTarget.setAttribute("src", "images/redCardBack.png");
+            // }
         });
         function compareCards() {
-            if (faceUpCards[0] == faceUpCards[1]) {
+            if (faceUpCards[0].getAttribute("src") == faceUpCards[1].getAttribute("src")) {
                 faceUpCards[0].removeEventListener('click', ev);
                 faceUpCards[1].removeEventListener('click', ev);
                 console.log("Same Detected");
                 emptyArray();
             }
             else {
-                faceUpCards[0].setAttribute("src","images/redCardBack.png");
-                faceUpCards[1].setAttribute("src","images/redCardBack.png");
-                console.log('removed');
-                console.log(faceUpCards[0].classList)
-                faceUpCards.length = 0;
+                setTimeout(faceUpCards[0].setAttribute("src","images/redCardBack.png"), 5000);
+                setTimeout(faceUpCards[1].setAttribute("src","images/redCardBack.png"), 5000);
+
+                setTimeout(faceUpCards.length = 0, 5000);
             }
         }
 
     });
     memoryGame.appendChild(image)
 }
-
-
-function flipCard(card){
-
-}
-
-
-
 
 function getCard(id) {
     return cards.find(card => card.id === id);
