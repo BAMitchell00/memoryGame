@@ -1,0 +1,109 @@
+//BRADLEY MITCHELL N220-27547 12/7/18
+
+let visibleCard = {};
+let isSecondCardVisible = false;
+
+const initialCards = [
+  {
+    id: "1a",
+    type: "slaw",
+    image: "images/slaw.jpg"
+  },
+  {
+    id: "1c",
+    type: "download",
+    image: "images/download.jpg"
+  },
+  {
+    id: "1b",
+    type: "disappointment",
+    image: "images/disappointment.png"
+  },
+  {
+    id: "1d",
+    type: "Eee",
+    image: "images/Eee.png"
+  },
+  {
+    id: "1e",
+    type: "Pew",
+    image: "images/pew.png"
+  },
+  {
+    id: "1f",
+    type: "tseries",
+    image: "images/tseries.jpg"
+  },
+  {
+    id: "2a",
+    type: "slaw",
+    image: "images/slaw.jpg"
+  },
+  {
+    id: "2c",
+    type: "download",
+    image: "images/download.jpg"
+  },
+  {
+    id: "2d",
+    type: "Eee",
+    image: "images/Eee.png"
+  },
+  {
+    id: "2e",
+    type: "Pew",
+    image: "images/pew.png"
+  },
+  {
+    id: "2b",
+    type: "disappointment",
+    image: "images/disappointment.png"
+  },
+  {
+    id: "2f",
+    type: "tseries",
+    image: "images/tseries.jpg"
+  }
+];
+
+const shuffledCards = initialCards.sort(() => 0.5 - Math.random());
+
+document.addEventListener("DOMContentLoaded", () => {
+  const gameElement = document.querySelector(".memory-game");
+
+  shuffledCards.forEach(card => {
+    const cardElement = document.createElement("img");
+
+    cardElement.src = card.image;
+    cardElement.className = "memory-card";
+    cardElement.setAttribute("id", card.id);
+    cardElement.setAttribute("src", "images/redCardBack.png");
+    cardElement.addEventListener("click", () => {
+      if (visibleCard.id) {
+        if (visibleCard.id === card.id || isSecondCardVisible) {
+          return;
+        }
+        isSecondCardVisible = true;
+        cardElement.setAttribute("src", card.image);
+
+        setTimeout(() => {
+          const visibleCardElement = document.getElementById(visibleCard.id);
+
+          if (card.type === visibleCard.type) {
+            cardElement.style.visibility = visibleCardElement.style.visibility =
+              "hidden";
+          } else {
+            cardElement.setAttribute("src", "images/redCardBack.png");
+            visibleCardElement.setAttribute("src", "images/redCardBack.png");
+          }
+          isSecondCardVisible = false;
+          visibleCard = {};
+        }, 2000);
+      } else {
+        visibleCard = card;
+        cardElement.setAttribute("src", card.image);
+      }
+    });
+    gameElement.appendChild(cardElement);
+  });
+});
