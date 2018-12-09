@@ -91,12 +91,11 @@ document.addEventListener("DOMContentLoaded", () => {
           if (card.type === visibleCard.type) {
             cardElement.style.visibility = "hidden";
             visibleCardElement.style.visibility = "hidden";
-            visibleCard = {};
           } else {
             cardElement.setAttribute("src", "images/redCardBack.png");
             visibleCardElement.setAttribute("src", "images/redCardBack.png");
-            visibleCard = {};
           }
+          visibleCard = {};
         } else {
           visibleCard = card;
         }
